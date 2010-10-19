@@ -2,9 +2,20 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+GET         /login          modules.cas.SecureCAS.login
+GET         /logout         modules.cas.SecureCAS.logout
+GET         /authenticate   modules.cas.SecureCAS.authenticate
+GET         /pgtcallbackurl modules.cas.SecureCAS.pgtCallBack
+
+
+
 # Home page
 GET     /                                       Application.index
 GET     /go/{tiny}                              Application.go
+GET     /go/{tiny}+                             Application.stats
+GET     /view/{tiny}                            Application.info
+GET     /info/{tiny}                            Application.info
+GET     /preview/{tiny}                         Application.info
 
 
 # Map static resources from the /app/public folder to the /public path

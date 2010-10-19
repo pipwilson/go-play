@@ -6,8 +6,11 @@ import play.*;
 import play.mvc.*;
 import play.data.validation.*;
 
+import controllers.modules.cas.*;
+
 import models.*;
 
+@With(SecureCAS.class)
 public class Application extends Controller {
 
     public static void index() {
