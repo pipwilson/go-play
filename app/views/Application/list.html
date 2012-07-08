@@ -1,0 +1,57 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="col_12">
+
+<div class="col_9">
+
+<h1>Create a tiny URL</h1>
+
+#{ifErrors}
+    <p class="notice warning">All fields are required!</p>
+#{/ifErrors}
+
+#{form @create(),class:'vertical'}
+<p>
+<label for="alias.target">URL you want to make shorter: </label>
+<input name="alias.target" id="alias.target">
+<label for="alias.target">Your tiny URL ends in: <span>This is optional</span></label>
+<input name="alias.tiny" id="alias.tiny" placeholder="This will be automatically generated if you don'">
+<button type="submit" class="blue" value="Create tiny URL">Create tiny URL</button>
+</p>
+#{/form}
+
+<h3>Existing tiny URLs</h3>
+#{if aliases.size() > 0}
+<ul class="alt">
+    #{list items:aliases, as:'alias'}
+        <li>${alias.tiny} - <a href="@{Application.go(alias.tiny)}">${alias.target}</a> <a href="/stats/${alias.tiny}"><span class="icon gray small" data-icon="j"></span></a> <span class="icon gray small" data-icon="7"></span></li>
+    #{/list}
+</ul>
+#{/if}
+#{else}
+<p>None yet!</p>
+#{/else}
+</div><!-- col_9 -->
+
+<div class="col_3">
+  <h6>To do</h6>
+  <ul class="alt">
+    <li>aggregate some numbers per tiny url</li>
+    <li>add some graphs, maybe using peity</li>
+    <li>add proper CAS auth</li>
+    <li>autogenerate short URLs if none provided</li>
+    <li>add API access</li>
+    <li>make a creator page that lists tinys created per user</li>
+  </ul>
+
+  <h6>Done</h6>
+  <ul class="checks">
+    <li>Add a Visit class</li>
+    <li>blacklist certain words</li>
+    <li>add a new visit entry per redirect</li>
+    <li><strike>Sanitise the tiny URL?</strike></li>
+  </ul>
+</div> <!-- col_3 -->
+
+</div> <!-- col_12 -->

@@ -10,19 +10,21 @@ GET         /pgtcallbackurl modules.cas.SecureCAS.pgtCallBack
 
 
 # Home page
-GET     /                                       Application.index
-GET     /go/{tiny}                              Application.go
-GET     /go/{tiny}+                             Application.stats
-GET     /view/{tiny}                            Application.info
-GET     /info/{tiny}                            Application.info
-GET     /preview/{tiny}                         Application.info
+GET     /                Application.list
+GET     /create          Application.list
+*       /admin           module:crud
+GET     /{tiny}/?        Application.go
+
+GET     /{tiny}\+        Application.stats
+GET     /stats/{tiny}/?  Application.stats
+GET     /user/{creatorUsername}/? Application.tinyByUser
+#GET     /view/{tiny}     Application.info
+#GET     /info/{tiny}     Application.info
+#GET     /preview/{tiny}  Application.info
 
 
 # Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET     /public/         staticDir:public
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
-
-# Import CRUD routes
-*      /admin                                   module:crud

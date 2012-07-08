@@ -1,0 +1,39 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="col_12">
+
+<div class="col_9">
+
+<h1>Stats for ${alias.tiny}</h1>
+
+http://yourls.org/images/stats-anim.gif
+
+clicks since creation (other time spans in dropdown), graph over time
+referrer by domain, pie chart
+location by country, pie chart
+
+<h3>Visits</h3>
+#{if visits.size() > 0}
+<ul class="alt">
+    #{list items:visits, as:'visit'}
+        <li>${visit.date}</li>
+    #{/list}
+</ul>
+#{/if}
+#{else}
+<p>None yet!</p>
+#{/else}
+</div><!-- col_9 -->
+
+<div class="col_3">
+  <h6>Metadata</h6>
+  <ul class="alt">
+    <li>Created by: <strong><a href="/user/${alias.creatorUsername}">${alias.creatorUsername}</a></strong></li>
+    <li>Created: <strong>${alias.created.since()} (${alias.created.format("dd MMMM yyyy")})</strong></li>
+    <li>Destination: <strong>${alias.target}</strong></li>
+  </ul>
+
+</div> <!-- col_3 -->
+
+</div> <!-- col_12 -->

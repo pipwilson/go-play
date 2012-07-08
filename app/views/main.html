@@ -4,11 +4,17 @@
     <head>
         <title>#{get 'title' /}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+        <script type="text/javascript" src="@{'/public/kickstart/js/prettify.js'}"></script>                    <!-- PRETTIFY -->
+        <script type="text/javascript" src="@{'/public/kickstart/js/kickstart.js'}"></script>                   <!-- KICKSTART -->
+        <link rel="stylesheet" type="text/css" href="@{'/public/kickstart/css/kickstart.css'}" media="all" />   <!-- KICKSTART -->
+        <link rel="stylesheet" type="text/css" href="@{'/public/kickstart/style.css'}" media="all" />           <!-- KICKSTART -->
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">         <!-- CUSTOM STYLES -->
+        </head><body><a id="top-of-page"></a><div id="wrap" class="clearfix">
+
     </head>
     <body>
         #{doLayout /}
