@@ -5,3 +5,17 @@
 #   email: bob@gmail.com
 #   password: secret
 #   fullname: Bob
+
+UrlAlias(goog):
+    tiny: google
+    target: http://www.google.com
+    creatorUsername: phil
+    isCustomAlias: true
+    created: 2012-01-01
+Visit(v):
+    tinyUrl: goog
+    date: 2012-07-19
+    ip: [111.22.33.55]   
+    referrer: http://www.bing.com
+    userAgent: [Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1201.0 Safari/537.1]
+    location: CZ

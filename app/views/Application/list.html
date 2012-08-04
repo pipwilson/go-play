@@ -7,16 +7,16 @@
 
 <h1>Create a tiny URL</h1>
 
-#{ifErrors}
-    <p class="notice warning">All fields are required!</p>
-#{/ifErrors}
-
 #{form @create(),class:'vertical'}
 <p>
 <label for="alias.target">URL you want to make shorter: </label>
-<input name="alias.target" id="alias.target">
-<label for="alias.target">Your tiny URL ends in: <span>This is optional</span></label>
-<input name="alias.tiny" id="alias.tiny" placeholder="This will be automatically generated if you don'">
+#{if flash['alias.target'] != null }<p class="notice error">#{error 'alias.target' /}</p>#{/if}
+<input name="alias.target" id="alias.target" value="${flash['alias.target']}">
+
+<label for="alias.tiny">URL you want to use instead: <span>http://hollow-ocean-2557.herokuapp.com/this-field</span></label>
+#{if flash['alias.tiny'] != null }<p class="notice error">#{error 'alias.tiny' /}</p>#{/if}
+<input name="alias.tiny" id="alias.tiny" placeholder="If left blank, this will be automatically generated" value="${flash['alias.tiny']}">
+
 <button type="submit" class="blue" value="Create tiny URL">Create tiny URL</button>
 </p>
 #{/form}
@@ -25,7 +25,7 @@
 #{if aliases.size() > 0}
 <ul class="alt">
     #{list items:aliases, as:'alias'}
-        <li>${alias.tiny} - <a href="@{Application.go(alias.tiny)}">${alias.target}</a> <a href="/stats/${alias.tiny}"><span class="icon gray small" data-icon="j"></span></a> <span class="icon gray small" data-icon="7"></span></li>
+        <li>${alias.tiny} - <a href="@{Application.go(alias.tiny)}">${alias.target}</a> <span class="icon gray small" data-icon="7"></span> <a href="/stats/${alias.tiny}"><span class="icon gray small" data-icon="j"></span></a></li>
     #{/list}
 </ul>
 #{/if}
@@ -43,7 +43,6 @@
     <li>autogenerate short URLs if none provided</li>
     <li>add API access</li>
     <li>make a creator page that lists tinys created per user</li>
-    <li>make sure target URLs start with http</li>
   </ul>
 
   <h6>Done</h6>
@@ -52,6 +51,7 @@
     <li>blacklist certain words</li>
     <li>add a new visit entry per redirect</li>
     <li><strike>Sanitise the tiny URL?</strike></li>
+    <li>make sure target URLs start with http</li>
   </ul>
 </div> <!-- col_3 -->
 

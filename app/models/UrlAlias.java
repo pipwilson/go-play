@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.RandomStringUtils;
+
 import play.data.validation.*;
 import play.db.jpa.*;
 import play.Play;
@@ -13,18 +16,15 @@ import play.Play;
 @Entity
 public class UrlAlias extends Model {
 
-    @CheckWith(BlacklistedWordsCheck.class) public String tiny;
-    @Required public String target;
+    @Column(unique=true) @CheckWith(BlacklistedWordsCheck.class) @Unique public String tiny;
+    @Required @URL public String target;
+
     public String creatorUsername;
     public boolean isCustomAlias = false;
     public Date created;
 
-    public UrlAlias(String tiny, String target, String creatorUsername, boolean isCustomAlias) {
-        this.tiny = tiny;
-        this.target = target;
-        this.creatorUsername = creatorUsername;
-        this.isCustomAlias = isCustomAlias;
-    }
+    // if tiny is empty
+    // tiny = RandomStringUtils.randomAlphanumeric(4);
 
     public String toString() {
         return tiny;
@@ -32,20 +32,27 @@ public class UrlAlias extends Model {
 
     static class BlacklistedWordsCheck extends Check {
 
+        public final static String message = "validation.blacklisted";
+
         public boolean isSatisfied(Object object, Object value) {
-            boolean blacklisted = false;
+            boolean isAnAcceptableString = true;
+
+            if (StringUtils.isEmpty(value.toString())) {
+                return isAnAcceptableString;
+            }
+
             String blacklist = Play.configuration.getProperty("word.blacklist");
-            System.out.println(blacklist);
             String[] blacklistedWords = blacklist.split(",");
             for(String blacklistedWord : blacklistedWords) {
-                System.out.println(blacklistedWord);
                 if (value.toString().equalsIgnoreCase(blacklistedWord)) {
-                    blacklisted = true;
+                    isAnAcceptableString = false;
                     break;
                 }
             }
-            return !blacklisted;
+
+            return isAnAcceptableString;
         }
     }
+
 
 }

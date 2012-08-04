@@ -14,16 +14,28 @@ referrer by domain, pie chart
 location by country, pie chart
 
 <h3>Visits</h3>
-#{if visits.size() > 0}
-<ul class="alt">
-    #{list items:visits, as:'visit'}
-        <li>${visit.date}</li>
-    #{/list}
-</ul>
+
+<table id="datatable">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Number of clicks</th>
+  </tr>
+  </thead>
+  <tbody>
+#{if dateclicks.size() > 0}
+  #{list items:dateclicks, as:'dateclick'}
+    <tr>
+      <th>${dateclick.key.format("dd/MM/yyyy")}</th>
+      <td>${dateclick.value}</td>
+    </tr>
+  #{/list}
 #{/if}
-#{else}
-<p>None yet!</p>
-#{/else}
+  </tbody>
+</table>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
 </div><!-- col_9 -->
 
 <div class="col_3">
@@ -31,7 +43,7 @@ location by country, pie chart
   <ul class="alt">
     <li>Created by: <strong><a href="/user/${alias.creatorUsername}">${alias.creatorUsername}</a></strong></li>
     <li>Created: <strong>${alias.created.since()} (${alias.created.format("dd MMMM yyyy")})</strong></li>
-    <li>Destination: <strong>${alias.target}</strong></li>
+    <li>Destination: <strong><a href="@{Application.go(alias.tiny)}">${alias.target}</a></strong></li>
   </ul>
 
 </div> <!-- col_3 -->
