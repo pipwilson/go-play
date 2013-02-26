@@ -5,6 +5,8 @@ require:
     - play -> heroku 0.3
     - net.sf.uadetector -> uadetector-resources 2012.06
     - provided -> maxmindgeoip 1.0
+    - provided -> zxing-core 2.0
+    - provided -> zxing-j2se 2.0
 repositories: 
     - provided: 
         type:     local

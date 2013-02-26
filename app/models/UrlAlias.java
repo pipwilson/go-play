@@ -16,10 +16,15 @@ import play.Play;
 @Entity
 public class UrlAlias extends Model {
 
-    @Column(unique=true) @CheckWith(BlacklistedWordsCheck.class) @Unique public String tiny;
-    @Required @URL public String target;
+    @Valid @Required @URL
+    public String target;
+
+    @Column(unique=true) @Valid @Unique @CheckWith(BlacklistedWordsCheck.class)
+    public String tiny;
+
 
     public String creatorUsername;
+
     public boolean isCustomAlias = false;
     public Date created;
 

@@ -44,7 +44,10 @@ location by country, pie chart
     <li>Created by: <strong><a href="/user/${alias.creatorUsername}">${alias.creatorUsername}</a></strong></li>
     <li>Created: <strong>${alias.created.since()} (${alias.created.format("dd MMMM yyyy")})</strong></li>
     <li>Destination: <strong><a href="@{Application.go(alias.tiny)}">${alias.target}</a></strong></li>
+    <li>Total number of visits: <strong>${totalVisits}</strong></li>
   </ul>
+  <p><img id="qr" src="@{Application.qr(alias.tiny)}" width="100%"></p>
+
 
 </div> <!-- col_3 -->
 

@@ -2,6 +2,6 @@
 # For example, for French create a messages.fr file
 #
 validation.url=The target has to be a proper web address!
-validation.required=You have to provide a target URL
+validation.required=You have to provide this information
 validation.blacklisted=Sorry, that word is reserved
 validation.unique=This tiny URL is already being used 
