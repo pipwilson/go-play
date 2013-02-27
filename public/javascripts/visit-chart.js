@@ -39,11 +39,11 @@ $(function () {
         var table = document.getElementById('datatable'),
         options = {
             chart: {
-                renderTo: 'container',
+                renderTo: 'visitsContainer',
                 type: 'column'
             },
             title: {
-                text: 'Clicks on this tinyurl in the last 7 days'
+                text: 'Clicks on this link in the last 7 days'
             },
             xAxis: {
             },
