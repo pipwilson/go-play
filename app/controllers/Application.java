@@ -61,10 +61,11 @@ public class Application extends Controller {
             validation.keep();
             list();
         } else {
+            Logger.debug(alias.toString());
             alias.created = new Date();
             alias.creatorUsername = username;
             alias.save();
-            render(alias);
+
         }
 
         list();
@@ -85,6 +86,7 @@ public class Application extends Controller {
             visit.referrer = getReferrer();
             visit.userAgent = getUserAgent();
             visit.location = getLocation(visit.ip); // get from IP
+            visit.tinyUrl = alias;
             visit.save();
 
             redirect(alias.target);
@@ -151,7 +153,7 @@ public class Application extends Controller {
         //ArrayList dateclicks = new ArrayList();
         HashMap dateclicks = new HashMap<Date, Long>(7);
 
-        Iterator visits = JPA.em().createQuery("select v.date, count(v) from Visit v where day(v.date) > day(current_date()) -7 and year(v.date) = year(current_date()) group by day(v.date) order by v.date asc").getResultList().iterator();
+        Iterator visits = JPA.em().createQuery("select date, count(*) from Visit v where v.tinyUrl = :alias and day(v.date) > day(current_date()) -7 and year(v.date) = year(current_date()) group by day(v.date) order by v.date asc").setParameter("alias", alias).getResultList().iterator();
 
         // loop over all visits to this tiny url and put them into a hashamp thus:
         // date : number of visits

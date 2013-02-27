@@ -32,7 +32,7 @@ public class UrlAlias extends Model {
     // tiny = RandomStringUtils.randomAlphanumeric(4);
 
     public String toString() {
-        return tiny;
+        return id + ": " + tiny + " -> " + target;
     }
 
     static class BlacklistedWordsCheck extends Check {
