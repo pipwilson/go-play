@@ -1,5 +1,5 @@
 tmp/**/*
 test-result/**/*
 precompiled
-lib/**/*
+lib/*.jar
 **/*.pyc
