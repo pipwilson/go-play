@@ -22,12 +22,6 @@ import org.apache.commons.collections.keyvalue.DefaultKeyValue;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
-import net.sf.uadetector.UADetectorServiceFactory;
-import net.sf.uadetector.UserAgent;
-import net.sf.uadetector.UserAgentStringParser;
-
-import com.maxmind.geoip.*;
-
 import play.*;
 import play.db.jpa.JPA;
 import play.mvc.*;
@@ -35,6 +29,7 @@ import play.data.validation.*;
 
 import controllers.modules.cas.*;
 
+import jobs.*;
 import models.*;
 
 @With(SecureCAS.class)
@@ -78,17 +73,9 @@ public class Application extends Controller {
     }
 
     public static void go(@Required String tiny) {
-        UrlAlias alias = UrlAlias.find("byTiny", tiny).first();
+        UrlAlias alias = UrlAlias.find("byTiny", tiny).first();        
         if(alias!=null && alias.target!=null) {
-            Visit visit = new Visit(alias);
-            visit.date = new Date();
-            visit.ip = request.remoteAddress;
-            visit.referrer = getReferrer();
-            visit.userAgent = getUserAgent();
-            visit.location = getLocation(visit.ip); // get from IP
-            visit.tinyUrl = alias;
-            visit.save();
-
+            new VisitRecorderJob(alias, request).now();
             redirect(alias.target);
         } else {
             list();
@@ -96,50 +83,7 @@ public class Application extends Controller {
     }
 
 
-    protected static String getReferrer() {
-        String referrer = "direct";
 
-        if(request.headers.containsKey("referer")) {
-            referrer = request.headers.get("referer").toString();
-        }
-
-        return referrer;
-    }
-
-
-
-    protected static String getUserAgent() {
-        String userAgent = "none";
-
-        if(request.headers.containsKey("user-agent")) {
-            userAgent = request.headers.get("user-agent").toString();
-            UserAgentStringParser parser = UADetectorServiceFactory.getUserAgentStringParser();
-            UserAgent agent = parser.parse(userAgent);
-            //System.out.println(agent.getName());
-            //System.out.println(agent.getOperatingSystem().getName());
-
-        }
-
-        return userAgent;
-    }
-
-
-    protected static String getLocation(String ip) {
-        String location = "none";
-
-        if (!ip.equals("127.0.0.1")) {
-            try {
-                String geoipDb = Play.configuration.getProperty("geoip.path");
-                LookupService cl = new LookupService(geoipDb, LookupService.GEOIP_MEMORY_CACHE);
-                location = cl.getCountry(ip).getName();
-
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
-            }
-        }
-
-        return location;
-    }
 
     public static void stats(@Required String tiny) {
         UrlAlias alias = UrlAlias.find("byTiny", tiny).first();
@@ -153,7 +97,7 @@ public class Application extends Controller {
         //ArrayList dateclicks = new ArrayList();
         HashMap dateclicks = new HashMap<Date, Long>(7);
 
-        Iterator visits = JPA.em().createQuery("select date, count(*) from Visit v where v.tinyUrl = :alias and day(v.date) > day(current_date()) -7 and year(v.date) = year(current_date()) group by day(v.date) order by v.date asc").setParameter("alias", alias).getResultList().iterator();
+        Iterator visits = JPA.em().createQuery("select date, count(*) from Visit v where v.tinyUrl = :alias and day(v.date) > day(current_date()) -7 and year(v.date) = year(current_date()) group by v.date order by v.date asc").setParameter("alias", alias).getResultList().iterator();
 
         // loop over all visits to this tiny url and put them into a hashamp thus:
         // date : number of visits
