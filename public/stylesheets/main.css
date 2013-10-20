@@ -6,3 +6,8 @@
 #datatable {
 
 }
+
+/* should probably be setting/unsetting the blue/gray class but hey ho */
+a:hover span.icon {
+  color: #3EBDFF;
+}
