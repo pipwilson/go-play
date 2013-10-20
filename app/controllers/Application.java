@@ -35,8 +35,15 @@ import models.*;
 @With(SecureCAS.class)
 public class Application extends Controller {
 
-    public static void list() {
-        List<UrlAlias> aliases = UrlAlias.findAll();
+    static String username = null;
+
+    @Before
+    public static void retrieveCasUsername() {
+        username = controllers.modules.cas.Security.connected().toString();
+    }
+
+    public static void list() {        
+        List<UrlAlias> aliases = UrlAlias.find("creatorUsername", username).fetch();
         render(aliases);
     }
 
@@ -130,9 +137,9 @@ public class Application extends Controller {
 
 
     public static void qr(@Required String tiny) {
-        // if we render qr codes to disk then they will be faster but we need
+        // If we render qr codes to disk then they will be faster but we need
         // to ensure they are regenerated on update.
-        // easier to do them dynamically on request.
+        // Easier to do them dynamically on request.
         // http://www.copperykeenclaws.com/how-to-create-qr-codes-in-java/
         // http://stackoverflow.com/questions/4127876/send-generated-image-to-browser-using-play-framework
 
@@ -182,6 +189,7 @@ public class Application extends Controller {
         renderBinary(file);
     }
 
+    // retrieve the aliases this username has created
     public static void tinyByUser(@Required String creatorUsername) {
         List<UrlAlias> aliases = UrlAlias.find("creatorUsername", creatorUsername).fetch();
         render(aliases);

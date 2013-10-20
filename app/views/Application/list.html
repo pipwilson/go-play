@@ -5,7 +5,7 @@
 
 <div class="col_9">
 
-<h1>Create a tiny URL</h1>
+<h1>Create a new URL</h1>
 
 #{form @create(),class:'vertical'}
 <p>
@@ -14,7 +14,7 @@
 <input name="alias.target" id="alias.target" value="${flash['alias.target']}">
 
 <label for="alias.tiny">URL you want to use instead: </label>
-<span>http://hollow-ocean-2557.herokuapp.com/</span>
+<span>${play.configuration['application.url']}</span>
 #{ifError 'alias.tiny'}<p class="notice error">#{error 'alias.tiny' /}</p>#{/ifError}
 <input name="alias.tiny" id="alias.tiny" placeholder="Short URL here. If left blank, this will be automatically generated" value="${flash['alias.tiny']}">
 
@@ -22,11 +22,15 @@
 </p>
 #{/form}
 
-<h3>Existing tiny URLs</h3>
+<h3>URLs you've created</h3>
 #{if aliases.size() > 0}
 <ul class="alt">
     #{list items:aliases, as:'alias'}
-        <li>${alias.tiny} - <a href="@{Application.go(alias.tiny)}">${alias.target}</a> <span class="icon gray small" data-icon="7"></span> <a href="/stats/${alias.tiny}"><span class="icon gray small" data-icon="j"></span></a></li>
+        <li>${alias.tiny} - 
+          <a href="@{Application.go(alias.tiny)}">${alias.target}</a> 
+          <a href="/edit/${alias.tiny}" title="Edit this URL"><span class="icon gray small" data-icon="7"></span></a>
+          <a href="/stats/${alias.tiny}" title="View stats for this URL"><span class="icon gray small" data-icon="j"></span></a>
+         </li>
     #{/list}
 </ul>
 #{/if}
