@@ -11,7 +11,11 @@ GET         /pgtcallbackurl modules.cas.SecureCAS.pgtCallBack
 
 # Home page
 GET     /                Application.list
+GET     /list            Application.list
 GET     /create          Application.list
+
+GET     /list/all        Application.listAll
+
 *       /admin           module:crud
 GET     /{tiny}/?        Application.go
 GET     /qr/{tiny}       Application.qr
@@ -19,6 +23,7 @@ GET     /qr/{tiny}       Application.qr
 GET     /{tiny}\+        Application.stats
 GET     /stats/{tiny}/?  Application.stats
 GET     /user/{creatorUsername}/? Application.tinyByUser
+
 #GET     /view/{tiny}     Application.info
 #GET     /info/{tiny}     Application.info
 #GET     /preview/{tiny}  Application.info

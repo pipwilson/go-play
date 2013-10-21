@@ -28,8 +28,8 @@
     #{list items:aliases, as:'alias'}
         <li>${alias.tiny} - 
           <a href="@{Application.go(alias.tiny)}">${alias.target}</a> 
-          <a href="/edit/${alias.tiny}" title="Edit this URL"><span class="icon gray small" data-icon="7"></span></a>
-          <a href="/stats/${alias.tiny}" title="View stats for this URL"><span class="icon gray small" data-icon="j"></span></a>
+          <a href="/edit/${alias.tiny}" title="Edit this URL"><span class="icon-edit"></span></a>
+          <a href="/stats/${alias.tiny}" title="View stats for this URL"><span class="icon-bar-chart"></span></a>
          </li>
     #{/list}
 </ul>

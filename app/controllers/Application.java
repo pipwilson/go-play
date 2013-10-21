@@ -29,6 +29,8 @@ import play.data.validation.*;
 
 import controllers.modules.cas.*;
 
+import play.modules.paginate.ModelPaginator;
+
 import jobs.*;
 import models.*;
 
@@ -45,6 +47,11 @@ public class Application extends Controller {
     public static void list() {        
         List<UrlAlias> aliases = UrlAlias.find("creatorUsername", username).fetch();
         render(aliases);
+    }
+
+    public static void listAll() {
+        ModelPaginator paginator = new ModelPaginator(UrlAlias.class);
+        render(paginator);
     }
 
     /*

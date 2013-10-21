@@ -3,3 +3,5 @@ test-result/**/*
 precompiled
 lib/*.jar
 **/*.pyc
+db/*
+modules/**/*

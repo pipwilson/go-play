@@ -1,3 +1,8 @@
+/* override default column background from transparent to white */
+.column {
+  background-color: #FFF;
+}
+
 /** override default Kickstart font colour for error messages **/
 .notice.error {
   color: black;
