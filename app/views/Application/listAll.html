@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:'All URLs' /}
+
+<div class="col_12">
+
+<div class="col_9">
+
+<a href="${play.configuration['application.url']}"><span class="icon-angle-left"></span> Go home</a>
+
+<h1>#{paginate.summary items:paginator/}</h1>
+
+<table class="striped sortable">
+<thead>
+<th>Tiny</th>
+<th>Target</th>
+<th>Creator</th>
+</thead>
+<tbody>
+#{paginate.list items:paginator, as:'r'} 
+<tr>
+    <td>${r.tiny}</td>
+    <td>${r.target}</td>
+    <td>${r.creatorUsername}</td>
+</tr>    
+#{/paginate.list} 
+</tbody>
+</table>
+
+#{paginate.controls items:paginator /} 
+</div>
+</div>
