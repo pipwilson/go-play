@@ -4,5 +4,7 @@ Database connection details are in conf/application.conf
 
 Within application.conf you will need to change the values of ``play.tmp`` and ``geoip.path``
 
+````
 $ play dependencies
 $ play run
+````
